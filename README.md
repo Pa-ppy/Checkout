@@ -1,12 +1,23 @@
 # Checkout
 
-A website that allows users to create and manage their tasks and activities.
+A website that allows users to create and manage their tasks and activities. It is built with Next.js, TypeScript and Tailwind CSS.
 
-## How to use
+## Features
 
-Download the zip file and extract or clone the repo.
-Open the directory
-In the terminal, do
-- npm install
-- npm install next
-- npm run dev
+- User Authentication
+- Task Creation, editing and deletion
+- Task status updates (pending or completed)
+- Modern and responsive user interface
+
+### Installation and setup
+
+- Clone the repository
+- install dependencies
+- Run the development server
+  npm install
+  npm install next
+  npm run dev
+
+#### Author
+
+Raymond Aboagye
