@@ -15,8 +15,6 @@ A website that allows users to create and manage their tasks and activities. It 
 - install dependencies
 - Run the development server
 
-  npm install vaul@latest
-
   npm install
 
   npm run dev
