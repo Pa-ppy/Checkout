@@ -46,17 +46,17 @@ Checkout is a productivity app designed to help users create, track, and manage 
 
 ##### Contributing
 
-    Fork the project.
+Fork the project.
 
-    Create a branch: git checkout -b feature/your-feature.
+Create a branch: git checkout -b feature/your-feature.
 
-    Commit changes: git commit -m 'Add some feature'.
+Commit changes: git commit -m 'Add some feature'.
 
-    Push: git push origin feature/your-feature.
+Push: git push origin feature/your-feature.
 
-    Open a Pull Request and describe your changes.
+Open a Pull Request and describe your changes.
 
 ###### License
 
-MIT © [Raymond Aboagye](https://github.com/pa-ppy)  
+MIT © [Pappy](https://github.com/pa-ppy)  
 _Free to use, modify, and share..._
