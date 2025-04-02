@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Eye, CheckCircle, EyeOff } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Eye, CheckCircle, EyeOff } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Simulate successful login
-      localStorage.setItem("isAuthenticated", "true")
+      localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -36,27 +36,28 @@ export default function SignIn() {
           name: "Alex Johnson",
           email: email,
           image: "/placeholder.svg?height=100&width=100",
-        }),
-      )
+        })
+      );
 
       toast({
         title: "Welcome back!",
         description: "You've successfully signed in to Checkout.",
         variant: "default",
-      })
+      });
 
-      router.push("/dashboard")
+      router.push("/dashboard");
     } catch (error) {
       toast({
         title: "Oops! Something went wrong",
         description: "Invalid email or password. Please try again.",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
+  //Login Area
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 p-4">
       <div className="mx-auto grid w-full max-w-md gap-6 rounded-xl border border-purple-100 dark:border-purple-900/50 bg-white/80 dark:bg-slate-900/80 p-8 shadow-xl shadow-purple-500/10 backdrop-blur-sm">
@@ -69,11 +70,16 @@ export default function SignIn() {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
             Welcome Back!
           </h1>
-          <p className="text-slate-600 dark:text-slate-400">Sign in to continue your productivity journey</p>
+          <p className="text-slate-600 dark:text-slate-400">
+            Sign in to continue your productivity journey
+          </p>
         </div>
         <form onSubmit={handleSubmit} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">
+            <Label
+              htmlFor="email"
+              className="text-slate-700 dark:text-slate-300"
+            >
               Email
             </Label>
             <Input
@@ -88,7 +94,10 @@ export default function SignIn() {
           </div>
           <div className="grid gap-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">
+              <Label
+                htmlFor="password"
+                className="text-slate-700 dark:text-slate-300"
+              >
                 Password
               </Label>
               <Link
@@ -115,8 +124,14 @@ export default function SignIn() {
                 className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-slate-400 hover:text-purple-600 dark:text-slate-500 dark:hover:text-purple-400"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                <span className="sr-only">{showPassword ? "Hide password" : "Show password"}</span>
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+                <span className="sr-only">
+                  {showPassword ? "Hide password" : "Show password"}
+                </span>
               </Button>
             </div>
           </div>
@@ -133,7 +148,14 @@ export default function SignIn() {
                   fill="none"
                   viewBox="0 0 24 24"
                 >
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
@@ -158,6 +180,5 @@ export default function SignIn() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
