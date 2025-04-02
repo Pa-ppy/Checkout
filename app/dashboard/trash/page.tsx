@@ -1,87 +1,98 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { RefreshCw, Trash2 } from "lucide-react"
+import { useEffect, useState } from "react";
+import { RefreshCw, Trash2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useToast } from "@/hooks/use-toast";
 
 type DeletedTask = {
-  id: string
-  title: string
-  description: string
-  status: "pending" | "completed"
-  createdAt: string
-  deletedAt: string
-  dueDate?: string
-  color?: string
-}
+  id: string;
+  title: string;
+  description: string;
+  status: "pending" | "completed";
+  createdAt: string;
+  deletedAt: string;
+  dueDate?: string;
+  color?: string;
+};
 
 export default function TrashPage() {
-  const [deletedTasks, setDeletedTasks] = useState<DeletedTask[]>([])
-  const [searchQuery, setSearchQuery] = useState("")
-  const { toast } = useToast()
+  const [deletedTasks, setDeletedTasks] = useState<DeletedTask[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
 
   useEffect(() => {
     // Get deleted tasks from localStorage
-    const deletedTasksData = localStorage.getItem("deletedTasks")
+    const deletedTasksData = localStorage.getItem("deletedTasks");
     if (deletedTasksData) {
-      setDeletedTasks(JSON.parse(deletedTasksData))
+      setDeletedTasks(JSON.parse(deletedTasksData));
     }
-  }, [])
+  }, []);
 
   const filteredTasks = deletedTasks.filter(
     (task) =>
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+      task.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleRestoreTask = (taskId: string) => {
     // Find the task to restore
-    const taskToRestore = deletedTasks.find((task) => task.id === taskId)
-    if (!taskToRestore) return
+    const taskToRestore = deletedTasks.find((task) => task.id === taskId);
+    if (!taskToRestore) return;
 
     // Remove from deleted tasks
-    const updatedDeletedTasks = deletedTasks.filter((task) => task.id !== taskId)
-    setDeletedTasks(updatedDeletedTasks)
-    localStorage.setItem("deletedTasks", JSON.stringify(updatedDeletedTasks))
+    const updatedDeletedTasks = deletedTasks.filter(
+      (task) => task.id !== taskId
+    );
+    setDeletedTasks(updatedDeletedTasks);
+    localStorage.setItem("deletedTasks", JSON.stringify(updatedDeletedTasks));
 
     // Add back to tasks
-    const { deletedAt, ...taskWithoutDeletedAt } = taskToRestore
-    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]")
-    tasks.push(taskWithoutDeletedAt)
-    localStorage.setItem("tasks", JSON.stringify(tasks))
+    const { deletedAt, ...taskWithoutDeletedAt } = taskToRestore;
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+    tasks.push(taskWithoutDeletedAt);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 
     toast({
       title: "Task restored!",
       description: "The task has been restored successfully.",
-    })
-  }
+    });
+  };
 
   const handlePermanentDelete = (taskId: string) => {
-    // Remove from deleted tasks
-    const updatedDeletedTasks = deletedTasks.filter((task) => task.id !== taskId)
-    setDeletedTasks(updatedDeletedTasks)
-    localStorage.setItem("deletedTasks", JSON.stringify(updatedDeletedTasks))
+    // Remove an item from deleted tasks
+    const updatedDeletedTasks = deletedTasks.filter(
+      (task) => task.id !== taskId
+    );
+    setDeletedTasks(updatedDeletedTasks);
+    localStorage.setItem("deletedTasks", JSON.stringify(updatedDeletedTasks));
 
     toast({
       title: "Task permanently deleted",
       description: "The task has been permanently deleted.",
-    })
-  }
+    });
+  };
 
   const handleEmptyTrash = () => {
-    setDeletedTasks([])
-    localStorage.setItem("deletedTasks", JSON.stringify([]))
+    setDeletedTasks([]);
+    localStorage.setItem("deletedTasks", JSON.stringify([]));
 
     toast({
       title: "Trash emptied",
       description: "All deleted tasks have been permanently removed.",
-    })
-  }
+    });
+  };
 
   return (
     <div className="grid gap-6">
@@ -103,7 +114,9 @@ export default function TrashPage() {
       <Card className="border-purple-100 dark:border-purple-900/50 bg-white dark:bg-slate-900 shadow-xl shadow-purple-500/5 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-purple-600 to-blue-500"></div>
         <CardHeader>
-          <CardTitle className="text-purple-700 dark:text-purple-400">Deleted Tasks</CardTitle>
+          <CardTitle className="text-purple-700 dark:text-purple-400">
+            Deleted Tasks
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4 mb-4">
@@ -137,17 +150,27 @@ export default function TrashPage() {
           {filteredTasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Trash2 className="h-12 w-12 text-slate-400 dark:text-slate-600 mb-4" />
-              <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200">No deleted tasks</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Tasks you delete will appear here</p>
+              <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200">
+                No deleted tasks
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                Tasks you delete will appear here
+              </p>
             </div>
           ) : (
             <div className="rounded-lg border border-purple-100 dark:border-purple-900/50 overflow-hidden">
               <Table>
                 <TableHeader className="bg-purple-50 dark:bg-purple-900/20">
                   <TableRow className="hover:bg-transparent border-purple-100 dark:border-purple-900/50">
-                    <TableHead className="text-purple-700 dark:text-purple-400 font-medium">Title</TableHead>
-                    <TableHead className="text-purple-700 dark:text-purple-400 font-medium">Status</TableHead>
-                    <TableHead className="text-purple-700 dark:text-purple-400 font-medium">Deleted On</TableHead>
+                    <TableHead className="text-purple-700 dark:text-purple-400 font-medium">
+                      Title
+                    </TableHead>
+                    <TableHead className="text-purple-700 dark:text-purple-400 font-medium">
+                      Status
+                    </TableHead>
+                    <TableHead className="text-purple-700 dark:text-purple-400 font-medium">
+                      Deleted On
+                    </TableHead>
                     <TableHead className="text-purple-700 dark:text-purple-400 font-medium text-right">
                       Actions
                     </TableHead>
@@ -159,7 +182,9 @@ export default function TrashPage() {
                       key={task.id}
                       className="hover:bg-purple-50 dark:hover:bg-purple-900/10 border-purple-100 dark:border-purple-900/50"
                     >
-                      <TableCell className="font-medium text-slate-800 dark:text-slate-200">{task.title}</TableCell>
+                      <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                        {task.title}
+                      </TableCell>
                       <TableCell>
                         <span
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
@@ -168,7 +193,9 @@ export default function TrashPage() {
                               : "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400"
                           }`}
                         >
-                          {task.status === "completed" ? "Completed" : "Pending"}
+                          {task.status === "completed"
+                            ? "Completed"
+                            : "Pending"}
                         </span>
                       </TableCell>
                       <TableCell className="text-slate-600 dark:text-slate-400">
@@ -205,6 +232,5 @@ export default function TrashPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
-
