@@ -177,7 +177,7 @@ export default function Dashboard() {
       </div>
     );
   }
-
+  // Interactive display additions
   return (
     <div className="grid gap-6">
       <div className="flex items-center justify-between">
