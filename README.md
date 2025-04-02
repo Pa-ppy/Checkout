@@ -19,8 +19,8 @@ Checkout is a productivity app designed to help users create, track, and manage 
 
   **Screenshots**:
   ![Home and Landing page](public/Screenshots/landing.png)
-  ![Task Dashboard](public/Screenshots/dashboard.png)  
   ![Sign in Page](public/Screenshots/signin.png)
+  ![Task Dashboard](public/Screenshots/dashboard.png)
 
 ### Installation and setup
 
@@ -36,25 +36,18 @@ Checkout is a productivity app designed to help users create, track, and manage 
 
 #### Usage
 
-    Sign Up/Log in
-
-    Add a task: Click the "+" button, enter details, and save.
-
-    Edit/Delete: Hover over a task to see action buttons.
-
-    Toggle status: Check the "Complete" box to mark as done.
+- Sign Up/Log in
+- Add a task: Click the "+" button, enter details, and save.
+- Edit/Delete: Hover over a task to see action buttons.
+- Toggle status: Check the "Complete" box to mark as done.
 
 ##### Contributing
 
-Fork the project.
-
-Create a branch: git checkout -b feature/your-feature.
-
-Commit changes: git commit -m 'Add some feature'.
-
-Push: git push origin feature/your-feature.
-
-Open a Pull Request and describe your changes.
+- Fork the project.
+- Create a branch: git checkout -b feature/your-feature.
+- Commit changes: git commit -m 'Add some feature'.
+- Push: git push origin feature/your-feature.
+- Open a Pull Request and describe your changes.
 
 ###### License
 
