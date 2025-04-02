@@ -1,42 +1,55 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import { useRouter, usePathname } from "next/navigation"
-import Link from "next/link"
-import { Bell, CheckSquare, CheckCircle, Home, LogOut, Menu, Sparkles, Trash, User } from "lucide-react"
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
+import {
+  Bell,
+  CheckSquare,
+  CheckCircle,
+  Home,
+  LogOut,
+  Menu,
+  Sparkles,
+  Trash,
+  User,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useToast } from "@/hooks/use-toast"
-import { type Notification, NotificationList } from "@/components/notification-list"
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useToast } from "@/hooks/use-toast";
+import {
+  type Notification,
+  NotificationList,
+} from "@/components/notification-list";
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const [isMounted, setIsMounted] = useState(false)
-  const [notifications, setNotifications] = useState<Notification[]>([])
-  const [showNotifications, setShowNotifications] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
-  const { toast } = useToast()
+  const [isMounted, setIsMounted] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const { toast } = useToast();
 
   useEffect(() => {
-    setIsMounted(true)
+    setIsMounted(true);
 
     // Check if user is authenticated
-    const isAuthenticated = localStorage.getItem("isAuthenticated")
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
     if (!isAuthenticated) {
-      router.push("/sign-in")
+      router.push("/sign-in");
     }
 
     // Load notifications from localStorage
-    const storedNotifications = localStorage.getItem("notifications")
+    const storedNotifications = localStorage.getItem("notifications");
     if (storedNotifications) {
-      setNotifications(JSON.parse(storedNotifications))
+      setNotifications(JSON.parse(storedNotifications));
     } else {
       // Set some demo notifications
       const demoNotifications: Notification[] = [
@@ -61,55 +74,58 @@ export default function DashboardLayout({
           read: true,
           createdAt: new Date(Date.now() - 172800000).toISOString(),
         },
-      ]
-      setNotifications(demoNotifications)
-      localStorage.setItem("notifications", JSON.stringify(demoNotifications))
+      ];
+      setNotifications(demoNotifications);
+      localStorage.setItem("notifications", JSON.stringify(demoNotifications));
     }
-  }, [router])
+  }, [router]);
 
   const handleSignOut = () => {
-    localStorage.removeItem("isAuthenticated")
-    localStorage.removeItem("user")
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("user");
 
     toast({
       title: "Signed out successfully",
       description: "We hope to see you again soon!",
-    })
+    });
 
-    router.push("/")
-  }
+    router.push("/");
+  };
 
   const handleMarkAsRead = (id: string) => {
     const updatedNotifications = notifications.map((notification) =>
-      notification.id === id ? { ...notification, read: true } : notification,
-    )
-    setNotifications(updatedNotifications)
-    localStorage.setItem("notifications", JSON.stringify(updatedNotifications))
-  }
+      notification.id === id ? { ...notification, read: true } : notification
+    );
+    setNotifications(updatedNotifications);
+    localStorage.setItem("notifications", JSON.stringify(updatedNotifications));
+  };
 
   const handleClearAll = () => {
-    setNotifications([])
-    localStorage.setItem("notifications", JSON.stringify([]))
-    setShowNotifications(false)
-  }
+    setNotifications([]);
+    localStorage.setItem("notifications", JSON.stringify([]));
+    setShowNotifications(false);
+  };
 
-  const unreadCount = notifications.filter((notification) => !notification.read).length
+  const unreadCount = notifications.filter(
+    (notification) => !notification.read
+  ).length;
 
   // Function to determine if a link is active
   const isActive = (path: string) => {
     if (path === "/dashboard" && pathname === "/dashboard") {
-      return true
+      return true;
     }
     if (path !== "/dashboard" && pathname?.startsWith(path)) {
-      return true
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   if (!isMounted) {
-    return null
+    return null;
   }
 
+  // Skeleton layout for the dashboard page
   return (
     <div className="flex min-h-[100dvh] flex-col bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-purple-100 dark:border-purple-900/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm px-4 sm:px-6">
@@ -129,7 +145,10 @@ export default function DashboardLayout({
             className="w-72 border-purple-100 dark:border-purple-900/50 bg-white dark:bg-slate-900 p-0"
           >
             <div className="flex h-16 items-center border-b border-purple-100 dark:border-purple-900/50 px-6">
-              <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 font-semibold"
+              >
                 <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                 <span className="font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
                   Checkout
@@ -184,7 +203,10 @@ export default function DashboardLayout({
             </nav>
           </SheetContent>
         </Sheet>
-        <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 font-semibold"
+        >
           <CheckCircle className="h-5 w-5 text-purple-600 dark:text-purple-400" />
           <span className="font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
             Checkout
@@ -279,6 +301,5 @@ export default function DashboardLayout({
         <main className="flex-1 p-4 md:p-6">{children}</main>
       </div>
     </div>
-  )
+  );
 }
-
